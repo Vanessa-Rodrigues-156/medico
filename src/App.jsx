@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./Patients/Layout";
-import Home from "./Patients/Home";
+//import Home from "./Patients/Home";
 import Blogs from "./Patients/Blogs";
 import Contact from "./Patients/Contact";
 import Register from "./Patients/Register";
@@ -23,18 +22,18 @@ export default function App() {
       <Routes>
        
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="blogs" element={<Blogs />} />
-          <Route path="register" element={<Register />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="patientdetails" element={<Patientdetails />} />
-          <Route path="hospitalsignin" element={<Hospitalsignin />} />
-          <Route path="hospitalreg" element={<Hospitalreg />} />
-          <Route path="mainpg" element={<Mainpg />} />
-          <Route path="profilepg" element={<Profilepg />} />
-          <Route path="medhistory" element={<Medhistory />} />
-          <Route path="reports" element={<Reports />} />
-          <Route path="staff" element={<Staff />} />
+        { /* <Route index element={<Home />}/>  */ }
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/patientdetails" element={<Patientdetails />} />
+          <Route path="/hospitalsignin" element={<Hospitalsignin />} />
+          <Route path="/hospitalreg" element={<Hospitalreg />} />
+          <Route path="/mainpg" element={<Mainpg />} />
+          <Route path="/profilepg" element={<Profilepg />} />
+          <Route path="/medhistory" element={<Medhistory />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/staff" element={<Staff />} />
 
         </Route>
       </Routes>
