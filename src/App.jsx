@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./Patients/Layout";
-//import Home from "./Patients/Home";
+import Home from "./Patients/Home";
 import Blogs from "./Patients/Blogs";
 import Contact from "./Patients/Contact";
 import Register from "./Patients/Register";
@@ -13,6 +13,7 @@ import Medhistory from "./Patients/Medhistory";
 import Profilepg from "./Patients/Profilepg";
 import Reports from "./Patients/Reports";
 import Staff from "./Hospital/Staff";
+import "./App.css";
 
 
 
@@ -20,9 +21,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-       
-        <Route path="/" element={<Layout />}>
-        { /* <Route index element={<Home />}/>  */ }
+       <>
+        <Route path="/" element={<Layout />}/>
+       <Route index element={<Home />}/> 
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
@@ -33,9 +34,10 @@ export default function App() {
           <Route path="/profilepg" element={<Profilepg />} />
           <Route path="/medhistory" element={<Medhistory />} />
           <Route path="/reports" element={<Reports />} />
-          <Route path="/staff" element={<Staff />} />
-
-        </Route>
+          <Route path="/staff" element={<Staff />} />  
+       
+          </>
+        
       </Routes>
     </BrowserRouter>
   );
