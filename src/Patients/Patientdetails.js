@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
 const Patientdetails = () => {
+
+  
     return (
       <>
       <div className="text-center">

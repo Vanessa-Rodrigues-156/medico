@@ -1,16 +1,53 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { addDoc, collection } from "@firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../connection";
+import {createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
+import { auth } from "../connection";
+// Sign up a user
+
+
+
 
 const Register = () => {
-  const input = useRef();
+  const name = useRef(); 
+  const phone = useRef();
+  const email = useRef();
+  const city = useRef();
+  const username = useRef();
+  const password = useRef();
+
+  const signUpUser = async (email, password) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    console.log("User created successfully",email,password);
+    // Handle success or redirect to dashboard
+    const user = userCredential.user;
+    await sendEmailVerification(user);
+    console.log("Email verification sent");
+    window.location.href = '/patientdetails';
+  } catch (error) {
+    // Handle errors (e.g., invalid email, weak password)
+    console.log(error);
+  }
+};
+
   const dbRef = collection(db, "users");
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(input.current.value);
     try {
-      addDoc(dbRef, { name: input.current.value });
+       await addDoc(dbRef, {
+        name: name.current.value,
+        phone: phone.current.value,
+        email: email.current.value,
+        city: city.current.value,
+        username: username.current.value,
+        password: password.current.value,
+      });
+      console.log("Document written with ID: ",name,phone,email,city,username,password);
+      signUpUser(email.current.value, password.current.value);
+      
+
     } catch (e) {
       console.log(e);
     }
@@ -55,9 +92,8 @@ const Register = () => {
           <form
             action="/register"
             method="post"
-            on
-            onSubmit={handleSubmit}
             className="row g-3 needs-validation"
+            onSubmit={handleSubmit}
             novalidate>
             <div className="col-md-4 position-relative">
               <label
@@ -70,7 +106,7 @@ const Register = () => {
                 className="form-control"
                 id="validationTooltip01"
                 formMethod="post"
-                ref={input}
+                ref={name}
                 required
               />
               <div className="valid-tooltip">Looks good!</div>
@@ -85,7 +121,7 @@ const Register = () => {
                 type="text"
                 className="form-control"
                 id="validationTooltip02"
-                ref={input}
+                ref={phone}
                 required
               />
               <div className="valid-tooltip">Looks good!</div>
@@ -105,7 +141,7 @@ const Register = () => {
                   className="form-control"
                   id="validationTooltipUsername"
                   aria-describedby="validationTooltipUsernamePrepend"
-                  ref={input}
+                  ref={email}
                   required
                 />
                 <div className="invalid-tooltip">
@@ -123,7 +159,7 @@ const Register = () => {
                 type="text"
                 className="form-control"
                 id="validationTooltip03"
-                ref={input}
+                ref={city}
                 required
               />
               <div className="invalid-tooltip">
@@ -140,7 +176,7 @@ const Register = () => {
                 type="text"
                 className="form-control"
                 id="validationTooltip05"
-                ref={input}
+                ref={username}
                 required
               />
               <div className="invalid-tooltip">
@@ -157,20 +193,27 @@ const Register = () => {
                 type="text"
                 className="form-control"
                 id="validationTooltip05"
-                ref={input}
+                ref={password}
                 required
               />
-              <div className="invalid-tooltip">
+              <div className="invalid-tooltip" >
                 Please provide a valid Password.
               </div>
             </div>
           </form>
         </div>
-        <Link
+       {/*  <Link
           to="/patientdetails"
           className="m-3 btn btn-primary">
           Ur all set!
-        </Link>
+        </Link> */}
+        <button
+          onClick={handleSubmit}
+
+          type="submit"
+          className="m-3 btn btn-primary">
+          Register!!
+        </button>
       </div>
     </div>
   );
