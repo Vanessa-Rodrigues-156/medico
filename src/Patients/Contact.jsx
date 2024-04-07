@@ -1,24 +1,51 @@
 import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../connection";
 import { useState } from "react";
 
 const Contact = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [user] = useAuthState(auth);
 
+const validateForm = () => {
+  if (!email || !password) {
+    setErrorMessage("Email and password cannot be empty");
+    return false;
+  }
+  if (!email.includes("@")) {
+    setErrorMessage("Invalid email format");
+    return false;
+  }
+  if (password.length < 6) {
+    setErrorMessage("Password must be at least 6 characters long");
+    return false;
+  }
+  return true;
+};
   const handleLogin = async (e) => {
-    e.preventDefault();
+   e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
     try {
-      await auth.signInWithEmailAndPassword(email, password);
+      //await auth.signInWithEmailAndPassword(email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       // User is logged in
       console.log("User logged in:", auth.currentUser.email);
       window.location.href = "/patientdetails";
     } catch (err) {
       console.error("Error logging in:", err.message);
+      setErrorMessage("Failed to sign in: " + err.message);
     }
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin(e);
+  };
+
   return (
     <div className="card text-center">
       <div className="card-header">
@@ -53,54 +80,55 @@ const Contact = () => {
       </div>
       <div className="card-body">
         <h5 className="card-title">New here? lets get you Signed-In</h5>
-        {user ? (
+        {/* {user ? (
           <p>Welcome, {user.email}! </p>
-        ) : (
-          <form
-            action="/contact"
-            method="post"
-            onSubmit={handleLogin}>
-            <div className="col-my-6">
-              <label
-                for="inputEmail4"
-                className="form-label">
-                Email
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="inputEmail4"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="col-my-6 position-relative">
-              <label
-                for="inputPassword4"
-                className="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="inputPassword4"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+        ) : ( */}
+        <form
+          action="/contact"
+          method="post"
+          onSubmit={handleSubmit}>
+          <div className="col-my-6">
+            <label
+              for="inputEmail4"
+              className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="inputEmail4"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="col-my-6 position-relative">
+            <label
+              for="inputPassword4"
+              className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="inputPassword4"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-            {/* <Link
+          {/* <Link
           to="/patientdetails"
           className="m-3 btn btn-primary">
           lets go!!
         </Link> */}
-            <button
-              type="submit"
-              className="m-3 btn btn-primary">
-              log in
-            </button>
-          </form>
-        )}
+          <button
+            type="submit"
+            className="m-3 btn btn-primary">
+            log in
+          </button>
+          {errorMessage && <p>{errorMessage}</p>}
+        </form>
+        {/* )} */}
       </div>
     </div>
   );
