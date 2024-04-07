@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
+//import { useAuthState } from "react-firebase-hooks/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../connection";
 import { useState } from "react";
@@ -8,7 +8,8 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [user] = useAuthState(auth);
+   const [successMessage, setSuccessMessage] = useState("");
+  //const [user] = useAuthState(auth);
 
 const validateForm = () => {
   if (!email || !password) {
@@ -35,10 +36,14 @@ const validateForm = () => {
       await signInWithEmailAndPassword(auth, email, password);
       // User is logged in
       console.log("User logged in:", auth.currentUser.email);
+      setSuccessMessage(`Welcome to Medico ${auth.currentUser.email}!! Now Let's head to your details page.`); 
+      setTimeout(() => {
       window.location.href = "/patientdetails";
+      }, 2000);
     } catch (err) {
       console.error("Error logging in:", err.message);
-      setErrorMessage("Failed to sign in: " + err.message);
+      setErrorMessage("Failed to sign in: " + err.message + "Please try registering");
+      window.location.href = "/register";
     }
   };
   const handleSubmit = (e) => {
@@ -79,56 +84,55 @@ const validateForm = () => {
         </ul>
       </div>
       <div className="card-body">
-        <h5 className="card-title">New here? lets get you Signed-In</h5>
-        {/* {user ? (
-          <p>Welcome, {user.email}! </p>
-        ) : ( */}
-        <form
-          action="/contact"
-          method="post"
-          onSubmit={handleSubmit}>
-          <div className="col-my-6">
-            <label
-              for="inputEmail4"
-              className="form-label">
-              Email
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="inputEmail4"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="col-my-6 position-relative">
-            <label
-              for="inputPassword4"
-              className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="inputPassword4"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+        {successMessage && <p>{successMessage}</p>}
+        <div>
+          <h5 className="card-title">New here? lets get you Signed-In</h5>
+          <form
+            action="/contact"
+            method="post"
+            onSubmit={handleSubmit}>
+            <div className="col-my-6">
+              <label
+                for="inputEmail4"
+                className="form-label">
+                Email
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="inputEmail4"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="col-my-6 position-relative">
+              <label
+                for="inputPassword4"
+                className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="inputPassword4"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
 
-          {/* <Link
+            {/* <Link
           to="/patientdetails"
           className="m-3 btn btn-primary">
           lets go!!
         </Link> */}
-          <button
-            type="submit"
-            className="m-3 btn btn-primary">
-            log in
-          </button>
-          {errorMessage && <p>{errorMessage}</p>}
-        </form>
-        {/* )} */}
+            <button
+              type="submit"
+              className="m-3 btn btn-primary">
+              log in
+            </button>
+            {errorMessage && <p>{errorMessage}</p>}
+          </form>
+        </div>
       </div>
     </div>
   );
