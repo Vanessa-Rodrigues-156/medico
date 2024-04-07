@@ -10,14 +10,10 @@ const Patientdetails = () => {
   const Address1 = useRef();
   const Address2 = useRef();
   const city = useRef();
-  const state = useRef();
   const zip = useRef();
   const Age = useRef();
   const Date_ob = useRef();
-  const Occupation = useRef();
-  const gender = useRef();
   const aadhaar = useRef();
-  const marital_s = useRef();
   const Insurance_C = useRef();
   const Insurance_id = useRef();
   const dbRef = collection(db, "users");
@@ -32,14 +28,10 @@ const Patientdetails = () => {
         Address1: Address1.current.value,
         Address2: Address2.current.value,
         city: city.current.value,
-        state: state.current.value,
         zip: zip.current.value,
         Age: Age.current.value,
         Date_ob: Date_ob.current.value,
-       Occupation: Occupation.current.value,
-        gender: gender.current.value,
         aadhaar: aadhaar.current.value,
-        marital_s: marital_s.current.value,
         Insurance_C: Insurance_C.current.value,
         Insurance_id: Insurance_id.current.value,
       });
@@ -183,7 +175,6 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            ref={city}
             required>
             <option
               selected
@@ -205,7 +196,7 @@ const Patientdetails = () => {
             className="form-control"
             id="validationDefault05"
             formMethod="post"
-            ref={zip}
+            ref={zip} 
             required
           />
         </div>
@@ -220,7 +211,7 @@ const Patientdetails = () => {
             className="form-control"
             id="validationDefault05"
             formMethod="post"
-            ref={Age}
+            ref={Age} 
             required
           />
         </div>
@@ -235,7 +226,7 @@ const Patientdetails = () => {
             className="form-control"
             id="validationDefault05"
             formMethod="post"
-            ref={Date_ob}
+            ref={Date_ob} 
             required
           />
         </div>
@@ -249,7 +240,7 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            ref={Occupation}
+            
             required>
             <option
               selected
@@ -270,7 +261,7 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            ref={gender}
+            
             required>
             <option
               selected
@@ -293,7 +284,7 @@ const Patientdetails = () => {
             className="form-control"
             id="validationDefault05"
             formMethod="post"
-            ref={aadhaar}
+            ref={aadhaar} 
             required
           />
         </div>
@@ -307,7 +298,7 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            ref={marital_s}
+            
             required>
             <option
               selected
