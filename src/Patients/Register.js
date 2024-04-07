@@ -5,10 +5,6 @@ import { db } from "../connection";
 import {createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
 import { auth } from "../connection";
 // Sign up a user
-
-
-
-
 const Register = () => {
   const name = useRef(); 
   const phone = useRef();
