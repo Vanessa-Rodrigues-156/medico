@@ -13,25 +13,45 @@ const Patientdetails = () => {
   const zip = useRef();
   const Age = useRef();
   const Date_ob = useRef();
+  const occselectref = useRef();
+  const genderselect = useRef();
+  const maritialselect = useRef();
   const aadhaar = useRef();
   const Insurance_C = useRef();
   const Insurance_id = useRef();
-  const dbRef = collection(db, "users");
+  const stateselect = useRef();
+  var state,
+    occ,
+    gender,
+    maritial = "";
 
-  const handleSubmit = async(e) => {
+  const dbRef = collection(db, "patients");
+  const handleSelect = (e) => {
+    e.preventDefault();
+    state = stateselect.current.value;
+    occ = occselectref.current.value;
+    gender = genderselect.current.value;
+    maritial = maritialselect.current.value;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-     await addDoc(dbRef, {
+      await addDoc(dbRef, {
         F_name: F_name.current.value,
         L_name: L_name.current.value,
         phone: phone.current.value,
         Address1: Address1.current.value,
         Address2: Address2.current.value,
         city: city.current.value,
+        state: state,
         zip: zip.current.value,
         Age: Age.current.value,
         Date_ob: Date_ob.current.value,
+        occupation: occ,
+        gender: gender,
         aadhaar: aadhaar.current.value,
+        maritial_s: maritial,
         Insurance_C: Insurance_C.current.value,
         Insurance_id: Insurance_id.current.value,
       });
@@ -175,6 +195,8 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
+            onChange={handleSelect}
+            ref={stateselect}
             required>
             <option
               selected
@@ -196,7 +218,7 @@ const Patientdetails = () => {
             className="form-control"
             id="validationDefault05"
             formMethod="post"
-            ref={zip} 
+            ref={zip}
             required
           />
         </div>
@@ -211,7 +233,7 @@ const Patientdetails = () => {
             className="form-control"
             id="validationDefault05"
             formMethod="post"
-            ref={Age} 
+            ref={Age}
             required
           />
         </div>
@@ -226,7 +248,7 @@ const Patientdetails = () => {
             className="form-control"
             id="validationDefault05"
             formMethod="post"
-            ref={Date_ob} 
+            ref={Date_ob}
             required
           />
         </div>
@@ -240,7 +262,8 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            
+            useRef="occselectref"
+            onChange={handleSelect}
             required>
             <option
               selected
@@ -261,7 +284,8 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            
+            ref={genderselect}
+            onChange={handleSelect}
             required>
             <option
               selected
@@ -284,7 +308,7 @@ const Patientdetails = () => {
             className="form-control"
             id="validationDefault05"
             formMethod="post"
-            ref={aadhaar} 
+            ref={aadhaar}
             required
           />
         </div>
@@ -298,7 +322,7 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            
+            ref={maritialselect}
             required>
             <option
               selected
