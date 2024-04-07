@@ -20,10 +20,10 @@ const Patientdetails = () => {
   const Insurance_C = useRef();
   const Insurance_id = useRef();
   const stateselect = useRef();
-  const state = useRef("");
-  const occ = useRef("");
-  const gender = useRef("");
-  const maritial = useRef("");
+  const state = useRef("mumbai");
+  const occ = useRef("army");
+  const gender = useRef("male");
+  const maritial = useRef("single");
 
   const dbRef = collection(db, "patients");
   useCallback(() => {
@@ -33,12 +33,14 @@ const Patientdetails = () => {
     maritial.current = maritialselect.current;
   }, []);
 
-  const handleSelectopt = useCallback((e) => {
-    e.preventDefault();
-    console.log(state, gender, maritial, occ);
-  }, [state, gender, maritial, occ]);
+  const handleSelectopt = useCallback(
+    (e) => {
+      e.preventDefault();
+      console.log(state, gender, maritial, occ);
+    },
+    [state, gender, maritial, occ]
+  );
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -60,6 +62,7 @@ const Patientdetails = () => {
         Insurance_C: Insurance_C.current.value,
         Insurance_id: Insurance_id.current.value,
       });
+      window.location.href = "/profilepg";
     } catch (e) {
       console.log(e + "error prevailed in the form");
     }
