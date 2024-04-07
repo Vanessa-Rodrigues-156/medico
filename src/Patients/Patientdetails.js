@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+
 import { addDoc, collection } from "@firebase/firestore";
 import { db } from "../connection";
 
@@ -9,7 +9,6 @@ const Patientdetails = () => {
   const phone = useRef();
   const Address1 = useRef();
   const Address2 = useRef();
-  const email = useRef();
   const city = useRef();
   const state = useRef();
   const zip = useRef();
@@ -23,22 +22,21 @@ const Patientdetails = () => {
   const Insurance_id = useRef();
   const dbRef = collection(db, "users");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      addDoc(dbRef, {
+     await addDoc(dbRef, {
         F_name: F_name.current.value,
         L_name: L_name.current.value,
         phone: phone.current.value,
         Address1: Address1.current.value,
         Address2: Address2.current.value,
-        email: email.current.value,
         city: city.current.value,
         state: state.current.value,
         zip: zip.current.value,
         Age: Age.current.value,
         Date_ob: Date_ob.current.value,
-        Occupation: Occupation.current.value,
+       Occupation: Occupation.current.value,
         gender: gender.current.value,
         aadhaar: aadhaar.current.value,
         marital_s: marital_s.current.value,
@@ -46,7 +44,7 @@ const Patientdetails = () => {
         Insurance_id: Insurance_id.current.value,
       });
     } catch (e) {
-      console.log(e);
+      console.log(e + "error prevailed in the form");
     }
   };
   return (
@@ -370,13 +368,6 @@ const Patientdetails = () => {
               Agree to terms and conditions
             </label>
           </div>
-        </div>
-        <div className="col-12">
-          <Link
-            to="/profilepg"
-            className="btn btn-primary">
-            All Done!
-          </Link>
         </div>
       </form>
       <button
