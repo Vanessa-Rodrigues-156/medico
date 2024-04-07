@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/medico/static/css/main.30a08c60.css",
+    "main.js": "/medico/static/js/main.04160c03.js",
+    "index.html": "/medico/index.html",
+    "main.30a08c60.css.map": "/medico/static/css/main.30a08c60.css.map",
+    "main.04160c03.js.map": "/medico/static/js/main.04160c03.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.30a08c60.css",
+    "static/js/main.04160c03.js"
+  ]
+}
