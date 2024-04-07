@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 
 import { addDoc, collection } from "@firebase/firestore";
 import { db } from "../connection";
@@ -20,10 +20,10 @@ const Patientdetails = () => {
   const Insurance_C = useRef();
   const Insurance_id = useRef();
   const stateselect = useRef();
-  const state = useRef("mumbai");
-  const occ = useRef("army");
-  const gender = useRef("female");
-  const maritial = useRef("seperated");
+  const state = useRef("");
+  const occ = useRef("");
+  const gender = useRef("");
+  const maritial = useRef("");
 
   const dbRef = collection(db, "patients");
   useCallback(() => {
