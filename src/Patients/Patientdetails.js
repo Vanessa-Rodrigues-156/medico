@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { addDoc, collection } from "@firebase/firestore";
 import { db } from "../connection";
@@ -13,27 +13,32 @@ const Patientdetails = () => {
   const zip = useRef();
   const Age = useRef();
   const Date_ob = useRef();
-  const occselectref = useRef();
+  const occselect = useRef();
   const genderselect = useRef();
   const maritialselect = useRef();
   const aadhaar = useRef();
   const Insurance_C = useRef();
   const Insurance_id = useRef();
   const stateselect = useRef();
-  var state,
-    occ,
-    gender,
-    maritial = "";
+  const state = useRef("mumbai");
+  const occ = useRef("army");
+  const gender = useRef("female");
+  const maritial = useRef("seperated");
 
   const dbRef = collection(db, "patients");
-  const handleSelect = (e) => {
-    e.preventDefault();
-    state = stateselect.current.value;
-    occ = occselectref.current.value;
-    gender = genderselect.current.value;
-    maritial = maritialselect.current.value;
-  };
+  useCallback(() => {
+    state.current = stateselect.current;
+    occ.current = occselect.current;
+    gender.current = genderselect.current;
+    maritial.current = maritialselect.current;
+  }, []);
 
+  const handleSelectopt = useCallback((e) => {
+    e.preventDefault();
+    console.log(state, gender, maritial, occ);
+  }, [state, gender, maritial, occ]);
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -44,14 +49,14 @@ const Patientdetails = () => {
         Address1: Address1.current.value,
         Address2: Address2.current.value,
         city: city.current.value,
-        state: state,
+        state: state.current.valueOf(),
         zip: zip.current.value,
         Age: Age.current.value,
         Date_ob: Date_ob.current.value,
-        occupation: occ,
-        gender: gender,
+        occupation: occ.current.valueOf(),
+        gender: gender.current.valueOf(),
         aadhaar: aadhaar.current.value,
-        maritial_s: maritial,
+        maritial_s: maritial.current.valueOf(),
         Insurance_C: Insurance_C.current.value,
         Insurance_id: Insurance_id.current.value,
       });
@@ -195,7 +200,7 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            onChange={handleSelect}
+            onChange={handleSelectopt}
             ref={stateselect}
             required>
             <option
@@ -262,8 +267,8 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            useRef="occselectref"
-            onChange={handleSelect}
+            useRef={occselect}
+            onChange={handleSelectopt}
             required>
             <option
               selected
@@ -285,7 +290,7 @@ const Patientdetails = () => {
             id="validationDefault04"
             formMethod="post"
             ref={genderselect}
-            onChange={handleSelect}
+            onChange={handleSelectopt}
             required>
             <option
               selected
@@ -323,6 +328,7 @@ const Patientdetails = () => {
             id="validationDefault04"
             formMethod="post"
             ref={maritialselect}
+            onChange={handleSelectopt}
             required>
             <option
               selected
