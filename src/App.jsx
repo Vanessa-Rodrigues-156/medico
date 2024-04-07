@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./Patients/Layout";
 import Home from "./Patients/Home";
@@ -16,11 +16,10 @@ import Staff from "./Hospital/Staff";
 import DisplayData from "./Patients/displaydata";
 import "./App.css";
 
-
-
 export default function App() {
   return (
     <BrowserRouter>
+      <Layout />
       <Routes>
         <>
           <Route
