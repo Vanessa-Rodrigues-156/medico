@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import {db} from "../connection";
 
 const Medhistory = () => {
   const [bloodgroup, setBloodgroup] = useState("");
@@ -24,6 +25,7 @@ const Medhistory = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const stateArray = [bloodgroup, diabities, currentmedications, allergies, surgeries, bloodpressure, cancer, substanceuse, heartdisease, hiv, covidvaccination, tuberculosis, psychologicaldisease, physicaldisorder, accidents, gastrointestinaldiseases, neurologicaldiseases, insomniac];
+ 
 
 const handleBloodGroupChange = (event) => {setBloodgroup(event.target.value);};
 const handleDiabitiesChange = (event) => {setDiabities(event.target.value);};
@@ -46,32 +48,52 @@ const handleInsomniacChange = (event) => {setInsomniac(event.target.value);};
 
 
  const validateForm = () => {
-    let isValid = true;
-    stateArray.forEach((state) => {
-      if (!state) {
-        isValid = false;
-      }
+   let isValid = true;
+   stateArray.forEach((state) => {
+     if (!state) {
+       isValid = false;
+     }
+   });
+   if (!isValid) {
+     setErrorMessage("Please fill in all fields");
+     console.log(errorMessage);
+   } else {
+     setErrorMessage("");
+     setSuccessMessage("Form submitted successfully");
+     console.log(successMessage);
+   }
+ };
+ const handleSubmit = (e) => {
+   e.preventDefault();
+   if (!validateForm()) {
+     console.log("Validation Failed");
+     return;
+   }
+   console.log(stateArray);
+   setSuccessMessage("Profile Updated Successfully!");
+   console.log(successMessage);
+    db.collection("data").add({
+      bloodgroup: bloodgroup,
+      diabities: diabities,
+      currentmedications: currentmedications,
+      allergies: allergies,
+      surgeries: surgeries,
+      bloodpressure: bloodpressure,
+      cancer: cancer,
+      substanceuse: substanceuse,
+      heartdisease: heartdisease,
+      hiv: hiv,
+      covidvaccination: covidvaccination,
+      tuberculosis: tuberculosis,
+      psychologicaldisease: psychologicaldisease,
+      physicaldisorder: physicaldisorder,
+      accidents: accidents,
+      gastrointestinaldiseases: gastrointestinaldiseases,
+      neurologicaldiseases: neurologicaldiseases,
+      insomniac: insomniac,
     });
-    if (!isValid) {
-      setErrorMessage("Please fill in all fields");
-      console.log(errorMessage);
-    } else {
-      setErrorMessage("");
-      setSuccessMessage("Form submitted successfully");
-      console.log(successMessage);
-    }
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validateForm()) {
-      console.log("Validation Failed");
-      // return;
-    }
-     console.log(stateArray);
-    setSuccessMessage("Profile Updated Successfully!");
-    console.log(successMessage);
-  };
 
+ };
 
     return (
       <>
@@ -725,5 +747,5 @@ const handleInsomniacChange = (event) => {setInsomniac(event.target.value);};
       </>
     );
     };
-    
-    export default Medhistory;
+
+    export default Medhistory ; 
