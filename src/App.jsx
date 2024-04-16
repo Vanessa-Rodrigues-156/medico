@@ -20,15 +20,17 @@ export default function App() {
   return (
     <BrowserRouter>
       <Layout />
+     
       <Routes>
         <>
-          <Route
-            path="/"
-            element={<Layout />}
-          />
+        
           <Route
             index
             element={<Home />}
+          />
+          <Route
+            path="/"
+            element={<Layout />}
           />
           <Route
             path="/blogs"
@@ -43,7 +45,7 @@ export default function App() {
             element={<Contact />}
           />
           <Route
-            path="/patientdetails"
+            path="/medico/patientdetails"
             element={<Patientdetails />}
           />
           <Route
