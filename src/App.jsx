@@ -26,7 +26,7 @@ export default function App() {
         
           <Route
             index
-            element={<Home />}
+            element={<Home/>}
           />
           <Route
             path="/"
