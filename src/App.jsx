@@ -20,10 +20,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Layout />
-     
       <Routes>
         <>
-        
           <Route
             index
             element={<Home/>}
