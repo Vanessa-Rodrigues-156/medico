@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 //import { useAuthState } from "react-firebase-hooks/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../connection";
+import {db, auth } from "../connection";
 import { useState } from "react";
-
+import { collection, addDoc } from "firebase/firestore";
+let currentuser;
 const Contact = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,6 +38,11 @@ const validateForm = () => {
       // User is logged in
       console.log("User logged in:", auth.currentUser.email);
       setSuccessMessage(`Welcome to Medico ${auth.currentUser.email}!! Now Let's head to your details page.`); 
+
+     currentuser= auth.currentUser.uid; 
+      await addDoc(collection(db,"data"),currentuser,{
+         userId: auth.currentUser.uid});
+       
       setTimeout(() => {
       window.location.href = "/patientdetails";
       }, 2000);
@@ -137,4 +143,7 @@ const validateForm = () => {
     </div>
   );
 };
+export var currentUser = currentuser;
+
+
 export default Contact;
