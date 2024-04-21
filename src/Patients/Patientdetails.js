@@ -1,7 +1,9 @@
-import { useCallback, useRef } from "react";
+import { useEffect, useRef, useState  } from "react";
 
-import { addDoc, collection } from "@firebase/firestore";
+import { addDoc, collection} from "@firebase/firestore";
 import { db } from "../connection";
+import { currentUser } from "./Contact";
+
 
 const Patientdetails = () => {
   const F_name = useRef();
@@ -13,55 +15,61 @@ const Patientdetails = () => {
   const zip = useRef();
   const Age = useRef();
   const Date_ob = useRef();
-  const occselect = useRef();
-  const genderselect = useRef();
-  const maritialselect = useRef();
   const aadhaar = useRef();
   const Insurance_C = useRef();
   const Insurance_id = useRef();
-  const stateselect = useRef();
-  const state = useRef("mumbai");
-  const occ = useRef("army");
-  const gender = useRef("male");
-  const maritial = useRef("single");
+  const [state , setState] = useState("");
+  const [occ , setOcc] = useState("");
+  const [maritial , setMaritial] = useState("");
+  const [gender , setGender] = useState("");
+  const Currentuid =toString(currentUser);
 
-  const dbRef = collection(db, "patients");
-  useCallback(() => {
-    state.current = stateselect.current;
-    occ.current = occselect.current;
-    gender.current = genderselect.current;
-    maritial.current = maritialselect.current;
-  }, []);
+  const dbRef = collection(db, "data", "data", Currentuid );
 
-  const handleSelectopt = useCallback(
-    (e) => {
-      e.preventDefault();
-      console.log(state, gender, maritial, occ);
-    },
-    [state, gender, maritial, occ]
-  );
+useEffect(() => { 
+console.log(state);
+console.log(gender);
+console.log(maritial);
+console.log(occ);
+
+},[gender, maritial, occ, state]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await addDoc(dbRef, {
-        F_name: F_name.current.value,
-        L_name: L_name.current.value,
-        phone: phone.current.value,
-        Address1: Address1.current.value,
-        Address2: Address2.current.value,
-        city: city.current.value,
-        state: state.current.valueOf(),
-        zip: zip.current.value,
-        Age: Age.current.value,
-        Date_ob: Date_ob.current.value,
-        occupation: occ.current.valueOf(),
-        gender: gender.current.valueOf(),
-        aadhaar: aadhaar.current.value,
-        maritial_s: maritial.current.valueOf(),
-        Insurance_C: Insurance_C.current.value,
-        Insurance_id: Insurance_id.current.value,
+        F_name: `${F_name.current.value}`,
+        L_name:` ${L_name.current.value}`,
+        phone: `${phone.current.value}`,
+        Address1: `${Address1.current.value}`,
+        Address2: `${Address2.current.value}`,
+        city: `${city.current.value}`,
+        state: `${state}`,
+        zip: `${zip.current.value}`,
+        Age: `${Age.current.value}`,
+        Date_ob: `${Date_ob.current.value}`,
+        occupation: `${occ}`,
+        gender: `${gender}`,
+        aadhaar: `${aadhaar.current.value}`,
+        maritial_s: `${maritial}`,
+        Insurance_C: `${Insurance_C.current.value}`,
+        Insurance_id: `${Insurance_id.current.value}`,
       });
+        // phone: phone.current.value,
+        // Address1: Address1.current.value,
+        // Address2: Address2.current.value,
+        // city: city.current.value,
+        // state: state.current,
+        // zip: zip.current.value,
+        // Age: Age.current.value,
+        // Date_ob: Date_ob.current.value,
+        // occupation: occ.current,
+        // gender: gender.current,
+        // aadhaar: aadhaar.current.value,
+        // maritial_s: maritial.current,
+        // Insurance_C: Insurance_C.current.value,
+        // Insurance_id: Insurance_id.current.value,
+   
       window.location.href = "/profilepg";
     } catch (e) {
       console.log(e + "error prevailed in the form");
@@ -203,16 +211,31 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            onChange={handleSelectopt}
-            ref={stateselect}
+            onChange={(e) => {setState(e.target.value)}}
             required>
             <option
               selected
               disabled
-              value="">
+              value={state}>
               Choose...
             </option>
-            <option>Mumbai</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Delhi">Delhi</option>
+            <option value ="Kolkata">Kolkata</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Hyderabad">Hyderabad</option>
+            <option value="Ahmedabad">Ahmedabad</option>
+            <option value="Pune">Pune</option>
+            <option value="Surat">Surat</option>
+            <option value="Jaipur">Jaipur</option>
+            <option value="Lucknow">Lucknow</option>
+            <option value="Visakhapatnam">Visakhapatnam</option>
+            <option value="Thane">Thane</option>
+            <option value="Bhopal">Bhopal</option>
+            <option value="Patna">Patna</option>
+           
+
           </select>
         </div>
         <div className="col-md-3">
@@ -270,16 +293,18 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            useRef={occselect}
-            onChange={handleSelectopt}
+            onChange={(e)=>{setOcc(e.target.value)}}
             required>
-            <option
-              selected
-              disabled
-              value="">
-              Choose...
-            </option>
-            <option>army</option>
+            <option selected disabled value={occ}>Choose... </option>
+            <option value= "army ">army</option>
+            <option value="doctor">doctor</option>
+            <option value ="engineer">engineer</option>
+            <option value="farmer">farmer</option>
+            <option value="goverment officer">government officer</option>
+            <option value= "private services ">private services</option>
+            <option value="student">student</option>
+            <option value="teacher">teacher</option>
+            <option value="unemployed">unemployed</option>
           </select>
         </div>
         <div className="col-md-3">
@@ -292,13 +317,12 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            ref={genderselect}
-            onChange={handleSelectopt}
+            onChange={(e)=>{setGender(e.target.value)}}
             required>
             <option
               selected
               disabled
-              value="">
+              value={gender}>
               Choose...
             </option>
             <option>Male</option>
@@ -330,13 +354,12 @@ const Patientdetails = () => {
             className="form-select"
             id="validationDefault04"
             formMethod="post"
-            ref={maritialselect}
-            onChange={handleSelectopt}
+            onChange={(e)=>{setMaritial(e.target.value)}}
             required>
             <option
               selected
               disabled
-              value="">
+              value={maritial}>
               Choose...
             </option>
             <option>Single</option>

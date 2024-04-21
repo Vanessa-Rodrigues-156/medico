@@ -43,7 +43,7 @@ export default function App() {
             element={<Contact />}
           />
           <Route
-            path="/medico/patientdetails"
+            path="/patientdetails"
             element={<Patientdetails />}
           />
           <Route

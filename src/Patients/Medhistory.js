@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import {db} from "../connection";
+import { currentUser } from "./Contact.jsx";
 
 const Medhistory = () => {
   const [bloodgroup, setBloodgroup] = useState("");
@@ -72,7 +73,9 @@ const handleInsomniacChange = (event) => {setInsomniac(event.target.value);};
    console.log(stateArray);
    setSuccessMessage("Profile Updated Successfully!");
    console.log(successMessage);
+   //const currentUser = auth.currentUser;
     db.collection("data").add({
+      userId: currentUser.uid,
       bloodgroup: bloodgroup,
       diabities: diabities,
       currentmedications: currentmedications,
