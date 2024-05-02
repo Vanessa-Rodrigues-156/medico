@@ -14,6 +14,7 @@ import Profilepg from "./Patients/Profilepg";
 import Reports from "./Patients/Reports";
 import Staff from "./Hospital/Staff";
 import DisplayData from "./Patients/displaydata";
+import HospitalDisplay from "./Hospital/hospitaldisplay";
 import "./App.css";
 
 export default function App() {
@@ -77,6 +78,10 @@ export default function App() {
           <Route
             path="/displaydata"
             element={<DisplayData />}
+          />
+          <Route
+            path="/hospitaldisplay"
+            element={<HospitalDisplay />}
           />
         </>
       </Routes>
