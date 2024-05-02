@@ -15,6 +15,8 @@ import Reports from "./Patients/Reports";
 import Staff from "./Hospital/Staff";
 import DisplayData from "./Patients/displaydata";
 import HospitalDisplay from "./Hospital/hospitaldisplay";
+import UserDetails from "./Hospital/hospitaldisplay";
+
 import "./App.css";
 
 export default function App() {
@@ -83,6 +85,10 @@ export default function App() {
             path="/hospitaldisplay"
             element={<HospitalDisplay />}
           />
+          <Route path="/hospitaldisplay/user1" element={<UserDetails/>}/>
+          <Route path="/hospitaldisplay/user2" element={<UserDetails/>}/>
+          <Route path="/hospitaldisplay/user3" element={<UserDetails/>}/>
+          <Route path="/hospitaldisplay/user4" element={<UserDetails/>}/>
         </>
       </Routes>
     </BrowserRouter>
